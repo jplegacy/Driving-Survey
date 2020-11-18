@@ -1,0 +1,199 @@
+<!DOCTYPE html> <html><head>
+        <title>Driving Survey</title>
+        <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Merriweather+Sans&amp;display=swap" rel="stylesheet">
+    <style>/*font-family: 'Fjalla One', sans-serif;*/
+/*font-family: 'Merriweather Sans', sans-serif;*/
+
+@keyframes typing {
+    from { width: 0%; }
+    to { width: 100%; }
+}
+@keyframes cursorEffect {
+   0% { border-color: white; }
+  50% { border-color: transparent; }
+}
+body{
+    background-color:#50a832;
+    text-align:center;
+     overflow: hidden;
+    }
+#begin{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top: 15%;
+    margin:auto;
+    transition:1s;
+}
+h1{
+
+    color:white;
+    font-size:65px;
+    font-family: 'Fjalla One', sans-serif;
+    overflow: hidden;
+    border-right: 3px solid white; 
+    white-space: nowrap;
+    margin: 0 auto; 
+    animation: typing 1.75s steps(35, end), cursorEffect 0.7s step-end infinite;
+}
+h3{
+    text-align:center;
+    color:white;
+    font-family: 'Fjalla One', sans-serif;
+    }
+#start, #end, #restart{
+    font-family: 'Fjalla One', sans-serif;
+    font-size:20px;
+    margin:auto;
+    border:none;
+    border-radius:5px;
+    padding:10px 15px 10px 15px ;
+    color:#50a832;
+    background-color:white;
+    transition:1s;
+    }
+#start:hover, #end:hover, #restart:hover{
+    box-shadow:10px 10px 0px 0px black;
+    cursor:pointer;
+    }
+input{
+    margin:5px;
+    }
+
+#form, #finished{
+    width:75%;
+    max-width:700px;
+    margin:auto;
+    transition:1s;
+    opacity:0;
+    text-align:center;
+    }
+input[placeholder]{
+    font-size:20px;
+    padding:10px;
+    border-radius:6px;
+    font-family: 'Merriweather Sans', sans-serif;
+    transition:1s;
+    color:#50a832;
+    min-width:200px;
+    width:30%;
+    max-width:500px;
+    }    
+input[placeholder]:focus {
+  width:50%;
+}
+
+label{
+     font-family: 'Fjalla One', sans-serif;
+    color:white;
+    }
+</style></head>
+    <body>
+        <div id="begin">
+            <div><h1>Driving Survey</h1></div>
+            <h3>Take A Short Survey to see if your eligble to Drive </h3>       
+            <button id="start">Begin</button>
+        </div>
+
+
+
+        <div id="form">
+        <form id="drivingForm" autocomplete="off">
+            <br><label for="firstName">First Name</label>
+            <input required="" name="firstName" placeholder="Bob">
+            
+            <br><label for="lastName">Last Name</label>
+            <input placeholder="Williams" name="lastName">
+            
+            <br><label for="age">Age</label>
+            <input placeholder="20" maxlength="2" name="age" type="number" min="13" max="99" required="">
+            
+            <br><label for="bDate">Date Of Birth</label>
+            <input placeholder="01/01/0000" type="date" name="bDate" required="">
+            
+            <div id="box">
+                <h3>What's Your Eye Color?</h3>
+                <label for="brown">Brown</label>
+                <input name="eyeColor" value="brown" type="radio">
+                
+                <label for="green">Green</label>
+                <input name="eyeColor" value="green" type="radio">
+                
+                <label for="blue">Blue</label>
+                <input name="eyeColor" value="blue" type="radio">
+                
+                <label for="other">Other</label>
+                <input name="eyeColor" value="other" type="radio">
+            </div>
+        </form>
+        <button style="margin-top:10px;" id="end">Finished!</button>
+        </div>
+            
+        <div id="finished">
+            <div id="text"></div>
+            <button style="margin-top:10px;" id="restart">Restart</button>
+        </div>
+    
+
+<script>
+/*__POPCODESTART__*/
+var form = {
+  first: null,
+  last: null,
+  age: null,
+  birthDate: null,
+  eyecolor: null,
+  eligble: function eligble(self) {
+    if (this.age <= 13) {
+      return "too Young to drive, Give it a few more Years.";
+    } else if (this.age > 13 && this.age < 18) {
+      return "not old enough for a full license but you are eligible for a Permit.";
+    } else {
+      return "eligible to Drive, you should take the Test.";
+    }
+  },
+  results: function results() {
+    document.getElementById("text").innerHTML = "<h3>Hello " + this.first + " " + this.last + ", After Analyzing your information, We concluded You are " + this.eligble() + "</h3><h3>Thank You for Taking the Survey</h3>";
+  }
+};
+document.getElementById('form').style = " display:none; ";
+document.getElementById('finished').style = " display:none; ";
+document.getElementById('start').addEventListener('click', function () {
+  document.getElementById('begin').style = "padding-top:5%;";
+  fade("form", "start", 300);
+});
+document.getElementById('end').addEventListener('click', function () {
+  var inputs = document.getElementById("drivingForm");
+  form.first = inputs.firstName.value;
+  form.last = inputs.lastName.value;
+  form.age = inputs.age.value;
+  form.birthDate = inputs.bDate.value;
+  form.eyeColor = inputs.eyeColor.value;
+
+  if (form.age < 13 || form.age > 99 || form.first === null || form.birthDate === null || form.age === null) {} else {
+    form.results();
+  }
+
+  fade("finished", "form", 200);
+});
+document.getElementById('restart').addEventListener('click', function () {
+  document.getElementById('drivingForm').reset();
+  fade("start", "finished", 0);
+  document.getElementById('begin').style = "padding-top:15%;";
+});
+
+function fade(fadeInId, fadeOutId, timer) {
+  setTimeout(function () {
+    document.getElementById(fadeOutId).style = "opacity:0;";
+  }, timer);
+  setTimeout(function () {
+    document.getElementById(fadeOutId).style = "display:none;";
+  }, timer + 1100);
+  setTimeout(function () {
+    document.getElementById(fadeInId).style = "display:flex;";
+  }, timer + 1200);
+  setTimeout(function () {
+    document.getElementById(fadeInId).style = "opacity:1";
+  }, timer + 1300);
+}
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInBvcGNvZGVQcmV2aWV3LmpzIl0sIm5hbWVzIjpbImZvcm0iLCJmaXJzdCIsImxhc3QiLCJhZ2UiLCJiaXJ0aERhdGUiLCJleWVjb2xvciIsImVsaWdibGUiLCJzZWxmIiwicmVzdWx0cyIsImRvY3VtZW50IiwiZ2V0RWxlbWVudEJ5SWQiLCJpbm5lckhUTUwiLCJzdHlsZSIsImFkZEV2ZW50TGlzdGVuZXIiLCJmYWRlIiwiaW5wdXRzIiwiZmlyc3ROYW1lIiwidmFsdWUiLCJsYXN0TmFtZSIsImJEYXRlIiwiZXllQ29sb3IiLCJyZXNldCIsImZhZGVJbklkIiwiZmFkZU91dElkIiwidGltZXIiLCJzZXRUaW1lb3V0Il0sIm1hcHBpbmdzIjoiQUFBQSxJQUFJQSxJQUFJLEdBQUc7QUFDUEMsRUFBQUEsS0FBSyxFQUFFLElBREE7QUFFUEMsRUFBQUEsSUFBSSxFQUFFLElBRkM7QUFHUEMsRUFBQUEsR0FBRyxFQUFFLElBSEU7QUFJUEMsRUFBQUEsU0FBUyxFQUFFLElBSko7QUFLUEMsRUFBQUEsUUFBUSxFQUFFLElBTEg7QUFNUEMsRUFBQUEsT0FBTyxFQUFFLGlCQUFTQyxJQUFULEVBQWM7QUFDbkIsUUFBSSxLQUFLSixHQUFMLElBQVksRUFBaEIsRUFBbUI7QUFDZixhQUFPLCtDQUFQO0FBQ0MsS0FGTCxNQUdLLElBQUcsS0FBS0EsR0FBTCxHQUFXLEVBQVgsSUFBaUIsS0FBS0EsR0FBTCxHQUFXLEVBQS9CLEVBQWtDO0FBQ25DLGFBQU8sc0VBQVA7QUFDQyxLQUZBLE1BR0Q7QUFDQSxhQUFPLDhDQUFQO0FBQ0M7QUFDSixHQWhCRTtBQWlCUEssRUFBQUEsT0FBTyxFQUFFLG1CQUFXO0FBQ2ZDLElBQUFBLFFBQVEsQ0FBQ0MsY0FBVCxDQUF3QixNQUF4QixFQUFnQ0MsU0FBaEMsR0FBMkMsZUFBZSxLQUFLVixLQUFwQixHQUEyQixHQUEzQixHQUFpQyxLQUFLQyxJQUF0QyxHQUE0QywyREFBNUMsR0FBMEcsS0FBS0ksT0FBTCxFQUExRyxHQUF5SCwrQ0FB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QUFDLFlBQVc7QUFDZGhCLElBQUFBLFFBQVEsQ0FBQ0MsY0FBVCxDQUF3QlksUUFBeEIsRUFBa0NWLEtBQWxDLEdBQXdDLFdBQXhDO0FBQ0gsR0FGSyxFQUVIWSxLQUFLLEdBQUMsSUFGSCxDQUFWO0FBR0MiLCJzb3VyY2VzQ29udGVudCI6WyJ2YXIgZm9ybSA9IHsgXG4gICAgZmlyc3Q6IG51bGwsXG4gICAgbGFzdDogbnVsbCxcbiAgICBhZ2U6IG51bGwsXG4gICAgYmlydGhEYXRlOiBudWxsLFxuICAgIGV5ZWNvbG9yOiBudWxsLFxuICAgIGVsaWdibGU6IGZ1bmN0aW9uKHNlbGYpe1xuICAgICAgICBpZiAodGhpcy5hZ2UgPD0gMTMpe1xuICAgICAgICAgICAgcmV0dXJuIFwidG9vIFlvdW5nIHRvIGRyaXZlLCBHaXZlIGl0IGEgZmV3IG1vcmUgWWVhcnMuXCI7XG4gICAgICAgICAgICB9XG4gICAgICAgIGVsc2UgaWYodGhpcy5hZ2UgPiAxMyAmJiB0aGlzLmFnZSA8IDE4KXtcbiAgICAgICAgICAgIHJldHVybiBcIm5vdCBvbGQgZW5vdWdoIGZvciBhIGZ1bGwgbGljZW5zZSBidXQgeW91IGFyZSBlbGlnaWJsZSBmb3IgYSBQZXJtaXQuXCI7XG4gICAgICAgICAgICB9XG4gICAgICAgIGVsc2V7XG4gICAgICAgICAgICByZXR1cm4gXCJlbGlnaWJsZSB0byBEcml2ZSwgeW91IHNob3VsZCB0YWtlIHRoZSBUZXN0LlwiO1xuICAgICAgICAgICAgfVxuICAgICAgICB9LFxuICAgIHJlc3VsdHM6IGZ1bmN0aW9uKCkge1xuICAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJ0ZXh0XCIpLmlubmVySFRNTCA9XCI8aDM+SGVsbG8gXCIgKyB0aGlzLmZpcnN0KyBcIiBcIiArIHRoaXMubGFzdCArXCIsIEFmdGVyIEFuYWx5emluZyB5b3VyIGluZm9ybWF0aW9uLCBXZSBjb25jbHVkZWQgWW91IGFyZSBcIiArIHRoaXMuZWxpZ2JsZSgpK1wiPC9oMz48aDM+VGhhbmsgWW91IGZvciBUYWtpbmcgdGhlIFN1cnZleTwvaDM+XCI7XG4gICAgfVxuICAgIFxuICAgIH07XG4gICAgXG5kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZm9ybScpLnN0eWxlPVwiIGRpc3BsYXk6bm9uZTsgXCI7XG5kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZmluaXNoZWQnKS5zdHlsZT1cIiBkaXNwbGF5Om5vbmU7IFwiO1xuXG5cbmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdzdGFydCcpLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgZnVuY3Rpb24oKSB7XG4gICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2JlZ2luJykuc3R5bGU9XCJwYWRkaW5nLXRvcDo1JTtcIjtcbiAgICBmYWRlKFwiZm9ybVwiLCBcInN0YXJ0XCIsMzAwKTtcbn0pO1xuXG5kb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZW5kJykuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCBmdW5jdGlvbigpIHtcbiAgICAgIHZhciBpbnB1dHMgPSBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChcImRyaXZpbmdGb3JtXCIpOyBcbiAgICAgIFxuICAgICAgZm9ybS5maXJzdCA9IGlucHV0cy5maXJzdE5hbWUudmFsdWU7XG4gICAgICBmb3JtLmxhc3QgPSBpbnB1dHMubGFzdE5hbWUudmFsdWU7XG4gICAgICBmb3JtLmFnZSA9IGlucHV0cy5hZ2UudmFsdWU7XG4gICAgICBmb3JtLmJpcnRoRGF0ZSA9IGlucHV0cy5iRGF0ZS52YWx1ZTtcbiAgICAgIGZvcm0uZXllQ29sb3IgPSBpbnB1dHMuZXllQ29sb3IudmFsdWU7XG4gICAgICBcbiAgICAgIGlmKGZvcm0uYWdlIDwgMTMgfHwgZm9ybS5hZ2UgPiA5OSB8fCBmb3JtLmZpcnN0ID09PSBudWxsIHx8IGZvcm0uYmlydGhEYXRlID09PSBudWxsIHx8IGZvcm0uYWdlID09PSBudWxsKXtcbiAgICAgICAgICB9XG4gICAgICBlbHNle1xuICAgICAgICAgIGZvcm0ucmVzdWx0cygpO1xuICAgICAgICAgIH1cbiAgICAgIGZhZGUoXCJmaW5pc2hlZFwiLCBcImZvcm1cIiwgMjAwKTtcbn0pOyBcbmRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdyZXN0YXJ0JykuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCBmdW5jdGlvbigpIHtcbiAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZCgnZHJpdmluZ0Zvcm0nKS5yZXNldCgpO1xuICAgIGZhZGUoXCJzdGFydFwiLCBcImZpbmlzaGVkXCIsIDApO1xuICAgIGRvY3VtZW50LmdldEVsZW1lbnRCeUlkKCdiZWdpbicpLnN0eWxlPVwicGFkZGluZy10b3A6MTUlO1wiO1xuICAgIFxufSk7XG5mdW5jdGlvbiBmYWRlKGZhZGVJbklkLCBmYWRlT3V0SWQsIHRpbWVyKXtcbiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCkge1xuICAgICAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZmFkZU91dElkKS5zdHlsZT1cIm9wYWNpdHk6MDtcIjtcbiAgICAgICAgfSwgdGltZXIpO1xuICAgIHNldFRpbWVvdXQoZnVuY3Rpb24oKSB7XG4gICAgICAgICAgICBkb2N1bWVudC5nZXRFbGVtZW50QnlJZChmYWRlT3V0SWQpLnN0eWxlPVwiZGlzcGxheTpub25lO1wiO1xuICAgICAgICB9LCB0aW1lcisxMTAwKTtcbiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCkge1xuICAgICAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZmFkZUluSWQpLnN0eWxlPVwiZGlzcGxheTpmbGV4O1wiO1xuICAgICAgICB9LCB0aW1lcisxMjAwKTtcbiAgICBzZXRUaW1lb3V0KGZ1bmN0aW9uKCkge1xuICAgICAgICAgICAgZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoZmFkZUluSWQpLnN0eWxlPVwib3BhY2l0eToxXCI7XG4gICAgICAgIH0sIHRpbWVyKzEzMDApO1xuICAgIH1cbiJdfQ==</script></body></html>
