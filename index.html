@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Driving Survey</title>
+        <link href="https://fonts.googleapis.com/css?family=Fjalla+One|Merriweather+Sans&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div id="begin">
+            <div><h1>Driving Survey</h1></div>
+            <h3>Take A Short Survey to see if your eligble to Drive </h3>       
+            <button id="start">Begin</button>
+        </div>
+
+
+
+        <div id="form">
+        <form id="drivingForm" autocomplete="off">
+            <br><label for="firstName">First Name</label>
+            <input required name="firstName" placeholder="Bob" >
+            
+            <br><label for="lastName">Last Name</label>
+            <input placeholder="Williams" name="lastName">
+            
+            <br><label for="age">Age</label>
+            <input placeholder="20" maxlength="2"name="age" type="number" min="13" max="99" required>
+            
+            <br><label for="bDate">Date Of Birth</label>
+            <input placeholder="01/01/0000" type="date" name="bDate" required>
+            
+            <div id="box">
+                <h3>What's Your Eye Color?</h3>
+                <label for="brown">Brown</label>
+                <input name="eyeColor" value="brown" type="radio">
+                
+                <label for="green">Green</label>
+                <input name="eyeColor" value="green" type="radio">
+                
+                <label for="blue">Blue</label>
+                <input name="eyeColor" value="blue" type="radio">
+                
+                <label for="other">Other</label>
+                <input name="eyeColor" value="other" type="radio">
+            </div>
+        </form>
+        <button style="margin-top:10px;" id="end">Finished!</button>
+        </div>
+            
+        <div id="finished">
+            <div id="text"></div>
+            <button style='margin-top:10px;' id='restart'>Restart</button>
+        </div>
+    </body>
+</html>
